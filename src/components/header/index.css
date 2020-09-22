@@ -1,0 +1,36 @@
+.header {
+  font-size: 1.3rem;
+}
+
+.ant-menu.ant-menu-dark.ant-menu-root.ant-menu-horizontal {
+  display: flex;
+  justify-content: center;
+}
+.search-value.ant-menu-item-disabled {
+  opacity: 1 !important;
+  cursor: auto;
+}
+
+.logo {
+  line-height: 31px;
+  width: 120px;
+  height: 31px;
+  background: rgb(44, 119, 35);
+  margin: 16px 28px 16px 0;
+  float: left;
+  color: #fdfdfd;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.profile {
+  line-height: 27px;
+    width: 120px;
+    height: 31px;
+    background: rgb(239, 70, 70);
+    margin: 16px 28px 16px 0;
+    float: right;
+    color: #fdfdfd;
+    text-align: center;
+    border-radius: 10px;
+}

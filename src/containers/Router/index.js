@@ -1,0 +1,40 @@
+import middlewareRoute from "./middlewareRoute";
+
+import Login from 'containers/Authen/Login';
+import Register from 'containers/Authen/Register';
+import Admin from 'containers/Admin';
+import User from 'containers/User';
+import Home from 'containers/Home';
+
+const withRouter = middlewareRoute("/");
+
+const indexRoutes = [
+    {
+        path: '/login',
+        name: 'Login',
+        component: Login
+    },
+    {
+        path: '/register',
+        name: 'Register',
+        component: Register
+    },
+    {
+        path: '/home',
+        name: 'Home',
+        component: Home
+    },
+    {
+        path: '/admin',
+        name: 'Admin',
+        component: withRouter(Admin, 'isAdmin')
+    },
+    {
+        path: '/user',
+        name: 'User',
+        component: withRouter(User, 'isUser')
+    },
+    { path: '/', pathTo: '/login', name: 'Home', redirect: true }
+];
+
+export default indexRoutes;

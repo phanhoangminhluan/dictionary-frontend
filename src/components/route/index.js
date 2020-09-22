@@ -1,1 +1,0 @@
-export { renderRoutes } from './route';

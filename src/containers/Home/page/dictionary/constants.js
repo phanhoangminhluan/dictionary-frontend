@@ -1,0 +1,9 @@
+export const key = 'dictionaryFlashcard/Home/page/dictionary';
+
+export const API_SEARCH_WORD_DETAIL = `${key}/API_SEARCH_WORD_DETAIL`;
+export const API_SEARCH_WORD_DETAIL_SUCCESS = `${key}/API_SEARCH_WORD_DETAIL_SUCCESS`;
+export const API_SEARCH_WORD_DETAIL_ERROR = `${key}/API_SEARCH_WORD_DETAIL_ERROR`;
+
+export const API_GET_WORD_SUGGESTION = `${key}/API_GET_WORD_SUGGESTION`;
+export const API_GET_WORD_SUGGESTION_SUCCESS = `${key}/API_GET_WORD_SUGGESTION_SUCCESS`;
+export const API_GET_WORD_SUGGESTION_ERROR = `${key}/API_GET_WORD_SUGGESTION_ERROR`;
