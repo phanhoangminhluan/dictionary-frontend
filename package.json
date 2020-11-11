@@ -22,7 +22,7 @@
     "invariant": "^2.2.4",
     "less": "^3.11.1",
     "less-loader": "^5.0.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "rc-banner-anim": "^2.4.3",
     "rc-queue-anim": "^1.8.4",
     "rc-scroll-anim": "^2.7.4",
