@@ -10,6 +10,12 @@ const makeSelectWordDetail = () =>
     selectDictionary,
     state => getOr({}, 'wordDetail')(state)
   )
+  
+const makeSelectFetching = () => 
+  createSelector(
+    selectDictionary,
+    state => getOr(false, 'fetching')(state)
+  )
 
 const makeSelectWordSuggestion = () => 
   createSelector(
@@ -21,5 +27,6 @@ const makeSelectWordSuggestion = () =>
 export {
   selectDictionary, 
   makeSelectWordDetail, 
-  makeSelectWordSuggestion
+  makeSelectWordSuggestion,
+  makeSelectFetching
 };

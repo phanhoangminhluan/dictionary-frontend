@@ -78,10 +78,10 @@ export function CardSet({ addManyCard, fleching, message, error }) {
             list && list.map((item, index) => (
               <Row key={index}>
                 <Col span={12}>
-                  <TextArea rows={4} onChange={(value) => handleChangeDefinition(value, index)} value={item.definition} />
+                  <TextArea rows={4} onChange={(value) => handleChangeTerm(value, index)} value={item.term} />
                 </Col>
                 <Col span={12}>
-                  <TextArea rows={4} onChange={(value) => handleChangeTerm(value, index)} value={item.term} />
+                  <TextArea rows={4} onChange={(value) => handleChangeDefinition(value, index)} value={item.definition} />
                 </Col>
               </Row>
             ))

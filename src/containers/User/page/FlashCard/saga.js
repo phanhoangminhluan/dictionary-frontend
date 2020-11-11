@@ -11,13 +11,13 @@ const learnAFlashCardAPI = (id) => {
 
 const rememberAFlashCardAPI = (cardSetSessionId, cardId) => {
   return putApi(
-    `${REMEMBER_A_FLASHCARD}/${cardSetSessionId}/${cardId}`
+    `${REMEMBER_A_FLASHCARD}/${cardId}`
   )
 }
 
 const forgetAFlashCardAPI = (cardSetSessionId, cardId) => {
   return putApi(
-    `${FORGET_A_FLASHCARD}/${cardSetSessionId}/${cardId}`
+    `${FORGET_A_FLASHCARD}/${cardId}`
   )
 }
 

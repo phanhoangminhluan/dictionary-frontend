@@ -37,3 +37,7 @@ export const post = (endpoint, body = {}, params = {}, headers = {}) => {
 export const put = (endpoint, body = {}, params = {}, headers = {}) => {
     return request(endpoint, "PUT", headers, params, body);
 };
+
+export const remove = (endpoint, body = {}, params = {}, headers = {}) => {
+    return request(endpoint, "DELETE", headers, params, body);
+};

@@ -12,6 +12,7 @@ export const createCardSet = (state = initialState, action) => {
   switch (action.type) {
     case constants.API_GET_ALL_MY_CARDSET:
     case constants.API_UPDATE_NAME_CARDSET:
+    case constants.API_DELETE_CARDSET:
       state.fetching = true;
       state.message = '';
       state.error = false;
@@ -30,8 +31,14 @@ export const createCardSet = (state = initialState, action) => {
       state.message = 'Update name success';
       state.listAllCardset = newList;
       return { ...state };
+    case constants.API_DELETE_CARDSET_SUCCESS:
+      state.fetching = false;
+      state.message = 'Delete card set success';
+      state.listAllCardset = state.listAllCardset.filter(item => item.id !== action.payload)
+      return { ...state };
     case constants.API_GET_ALL_MY_CARDSET_ERROR:
     case constants.API_UPDATE_NAME_CARDSET_ERROR:
+    case constants.API_DELETE_CARDSET_ERROR:
       state.fetching = false;
       state.error = true;
       return { ...state };

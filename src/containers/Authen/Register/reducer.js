@@ -10,6 +10,9 @@ export const initialState = {
 }
 
 export const registerReducer = (state = initialState, action) => {
+  console.log(action.type
+    );
+  
   switch (action.type) {
     case API_BUTTON_REGISTER:
       state.fetching = true;

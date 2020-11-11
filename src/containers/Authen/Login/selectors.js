@@ -10,4 +10,9 @@ const makeSelectFetching = () =>
     state => state.fetching
   )
 
-export {selectLogin, makeSelectFetching};
+const makeSelectError = () => 
+  createSelector(
+    selectLogin,
+    state => state.error
+  )
+export {selectLogin, makeSelectFetching, makeSelectError};

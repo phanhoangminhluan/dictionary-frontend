@@ -1,20 +1,52 @@
 /* eslint-disable react/prop-types */
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Row, Button, Card } from 'antd';
 
-export function CreateCard({cardLearn, rememberCard, forgetCard}) {
+export function CreateCard({ cardLearn, rememberCard, forgetCard }) {
+  const [key, setKey] = useState('term')
+  const [typeKey, setTypeKey] = useState(false)
+  const [animation, setAnimation] = useState('')
+  const [isLearn, setIsLearn] = useState(false)
+
+  useEffect(() => {
+    setKey('term')
+    setTypeKey(false)
+    setAnimation('')
+    setIsLearn(false)
+  }, [cardLearn])
+
+  const setCardContent = () => {
+    setIsLearn(true)
+    setTypeKey(!typeKey)
+    setAnimation('animation-card')
+    setTimeout(() => {
+      typeKey ? setKey('term') : setKey('definition')
+    }, 900)
+    setTimeout(() => {
+      setAnimation('')
+    }, 2000)
+  }
+
+  const onLearch = (action) => () => {
+    if(isLearn){
+      action()
+    }
+  }
+
   return (
     <Row>
-       <Card
-          style={{ width: 300, marginTop: 16 }}
-          actions={[
-            <Button key="next" onClick={rememberCard}>Remember</Button>,
-            <Button key="prev" onClick={forgetCard}>Prev</Button>
-          ]}
-        >
-            <p>{cardLearn.term}</p>
-            <p>{cardLearn.definition}</p>
-        </Card>
+      <Card
+        className="card-item"
+        style={{ width: "70%", margin: "16px auto" }}
+        actions={[
+          <Button className={ `card-button ${!isLearn ? `disable` : ''}` } key="next" onClick={onLearch(rememberCard)}>Remember</Button>,
+          <Button className={ `card-button ${!isLearn ? `disable` : ''}` } key="prev" onClick={onLearch(forgetCard)}>Forget</Button>
+        ]}
+      >
+        <div className={`card-content ${animation}`} onClick={setCardContent} >
+          <p>{cardLearn[key]}</p>
+        </div>
+      </Card>
     </Row>
   )
 }

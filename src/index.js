@@ -28,6 +28,12 @@ const initialState = {};
 const store = configureStore(initialState, history);
 const MOUNT_NODE = document.getElementById('root');
 
+window.addEventListener('storage', e => {
+  if(e.key === 'token' && e.oldValue && !e.newValue) {
+    window.location.reload();
+   }
+});
+
 ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>

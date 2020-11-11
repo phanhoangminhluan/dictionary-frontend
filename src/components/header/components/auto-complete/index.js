@@ -13,6 +13,7 @@ const { Option } = AutoComplete;
 export function Complete ({ getWordSuggestion, wordSuggestion, handleChange }) {
 
   const [options, setOptions] = useState([]);
+  const [value, setValue] = useState([]);
 
   useEffect(() => {
     setOptions(wordSuggestion)
@@ -26,9 +27,9 @@ export function Complete ({ getWordSuggestion, wordSuggestion, handleChange }) {
     handleChange(data)
   }, [handleChange]);
 
-  // const onChange = data => {
-  //   setValue(data);
-  // };
+  const onChange = data => {
+    setValue(data);
+  };
 
   const children = options.map(item => (
     <Option key={item} value={item}>
@@ -39,14 +40,14 @@ export function Complete ({ getWordSuggestion, wordSuggestion, handleChange }) {
   return (
     <div>
       <AutoComplete
-        // value={value}
-        // options={options}
+        value={value}
+        options={options}
         style={{
           width: 200,
         }}
         onSelect={onSelect}
         onSearch={onSearch}
-        // onChange={onChange}
+        onChange={onChange}
         placeholder="Type your word"
       >
         {children}

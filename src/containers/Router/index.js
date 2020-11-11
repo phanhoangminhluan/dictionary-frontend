@@ -10,6 +10,11 @@ const withRouter = middlewareRoute("/");
 
 const indexRoutes = [
     {
+        path: '/home',
+        name: 'Home',
+        component: Home
+    },
+    {
         path: '/login',
         name: 'Login',
         component: Login
@@ -18,11 +23,6 @@ const indexRoutes = [
         path: '/register',
         name: 'Register',
         component: Register
-    },
-    {
-        path: '/home',
-        name: 'Home',
-        component: Home
     },
     {
         path: '/admin',
@@ -34,7 +34,7 @@ const indexRoutes = [
         name: 'User',
         component: withRouter(User, 'isUser')
     },
-    { path: '/', pathTo: '/login', name: 'Home', redirect: true }
+    { path: '/', pathTo: '/home', name: 'Home', redirect: true }
 ];
 
 export default indexRoutes;

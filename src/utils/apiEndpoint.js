@@ -1,6 +1,7 @@
   
 // export const BASE_URL = "http://58.187.143.191:8080/dictionary-flashcard";42.118.80.254
-export const BASE_URL = 'http://42.113.176.181:8080/dictionary-flashcard'
+// export const BASE_URL = 'http://phanhoangminhluan.myddns.rocks:8080/dictionary-flashcard'
+export const BASE_URL = "http://192.168.43.42:8080/dictionary-flashcard"
 
 // Login
 export const AUTH__LOGIN = BASE_URL + '/login'
@@ -15,8 +16,8 @@ export const GET_WORD_DETAIL = BASE_URL + '/word'
 export const GET_WORD_SUGGESTION = BASE_URL + '/hint'
 
 //Card Set Controller
-export const ADD_MANY_CARD = BASE_URL + '/card-set/custom'
-export const UPDATE_NAME_CARD = BASE_URL + '/card-set/custom'
+export const ADD_MANY_CARD = BASE_URL + '/card-set'
+export const UPDATE_NAME_CARD = BASE_URL + '/card-set'
 export const GET_MY_CARDSET = BASE_URL + '/card-set'
 
 export const ADD_MORE_CARD = BASE_URL + '/card/cards'

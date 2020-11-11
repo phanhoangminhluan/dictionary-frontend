@@ -20,3 +20,20 @@ export function updateACard (cardSetId, definition, id, term) {
     param: { cardSetId, definition, id, term }
   }
 }
+
+export function deleteACard (id) {
+  return {
+    type: constants.API_DELETE_A_CARD,
+    param: { id }
+  }
+}
+
+export function updateNameCardset (id, name) {
+  return {
+    type: constants.API_UPDATE_NAME_CARDSET,
+    param: {
+      id,
+      name
+    }
+  }
+}

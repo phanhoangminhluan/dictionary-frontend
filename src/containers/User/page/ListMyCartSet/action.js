@@ -16,3 +16,12 @@ export function updateNameCardset (id, name, index) {
     }
   }
 }
+
+export function deleteCardset (id) {
+  return {
+    type: constants.API_DELETE_CARDSET,
+    param: {
+      id
+    }
+  }
+}

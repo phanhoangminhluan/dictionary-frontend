@@ -11,6 +11,18 @@ const makeSelectStudiableCards= () =>
     state => getOr([], 'studiableCards')(state)
   )
 
+const makeSelectListRemembers= () =>
+  createSelector(
+    selectFlashCard,
+    state => getOr([], 'listRemembers')(state)
+  )
+
+const makeSelectListForgets= () =>
+  createSelector(
+    selectFlashCard,
+    state => getOr([], 'listForgets')(state)
+  )
+
 const makeSelectCardSetSessionId = () =>
   createSelector(
     selectFlashCard,
@@ -44,6 +56,8 @@ const makeSelectError = () =>
 export {
   selectFlashCard,
   makeSelectStudiableCards,
+  makeSelectListRemembers,
+  makeSelectListForgets,
   makeSelectCardSetSessionId,
   makeSelectCardSetId,
   makeSelectFetching,

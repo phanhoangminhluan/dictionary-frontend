@@ -17,12 +17,14 @@ import saga from 'containers/Home/page/dictionary/saga';
 import AutoComplete from './components/auto-complete';
 
 import './index.css';
+import { useHistory } from "react-router-dom";
 
 const { Header } = Layout;
 
 
 export function HeaderCommon({ searchWord }) {
   const [word, setWord] = useState('');
+  const history = useHistory();
 
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
@@ -30,7 +32,18 @@ export function HeaderCommon({ searchWord }) {
   const handleChange = (value) => {
     setWord(value)
   }
-  const menu = (
+
+  const directUrl = (url) => () => {
+    history.push(url);
+  }
+
+  const handleLogout = () => {
+    localStorage.removeItem("dictionary_jwt");
+    localStorage.removeItem("dictionary__username");
+    window.location.href = "/";
+  }
+
+  const menu = LocalStorageUtils.isRole() !== "null" ? (
     <Menu>
       <Menu.Item>
         <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">
@@ -43,12 +56,12 @@ export function HeaderCommon({ searchWord }) {
         </a>
       </Menu.Item>
       <Menu.Item>
-        <a target="_blank" rel="noopener noreferrer" href="http://www.tmall.com/">
+        <span onClick={handleLogout}>
           Logout
-        </a>
+        </span>
       </Menu.Item>
     </Menu>
-  );
+  ) : (<div></div>);
 
 
   return (
@@ -60,11 +73,15 @@ export function HeaderCommon({ searchWord }) {
         <Dropdown overlay={menu}>
           {
             LocalStorageUtils.isRole() !== "null" ? (
-              <span>
+              <span style={{
+                display: 'flex',
+                justifyContent: 'space-around',
+                alignItems: 'center'
+              }}>
                 {LocalStorageUtils.getItem(LOCAL_STORAGE_KEY.USERNAME)} <Icon type="user" />
               </span>
             ) : (
-                <span>
+                <span onClick={directUrl('/login')}>
                   Login
                 </span>
               )
@@ -74,18 +91,17 @@ export function HeaderCommon({ searchWord }) {
       <Menu
         theme="dark"
         mode="horizontal"
-        defaultSelectedKeys={['1']}
         style={{ lineHeight: '64px' }}
       >
-        <Menu.Item key="1">Home</Menu.Item>
+        <Menu.Item onClick={directUrl('/home')} key="1">Home</Menu.Item>
         <Menu.Item className="search-value" disabled={true} key="3">
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <AutoComplete handleChange={handleChange} />
-            <Button type="primary" onClick={() => searchWord(word)}>Search</Button>
+            <Button type="primary" onClick={() => { searchWord(word); history.push('/home/dictionary') }}>Search</Button>
           </div>
         </Menu.Item>
 
-        <Menu.Item key="2">Flashcard</Menu.Item>
+        <Menu.Item onClick={directUrl('/user')} key="2">Flashcard</Menu.Item>
       </Menu>
 
     </Header>

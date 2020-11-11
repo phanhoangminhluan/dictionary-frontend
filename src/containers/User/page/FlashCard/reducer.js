@@ -10,7 +10,7 @@ export const initialState = {
   error: false,
 }
 
-export const createCardSet = (state = initialState, action) => {
+export const flashCard = (state = initialState, action) => {
   switch (action.type) {
     case constants.API_LEARN_A_FLASHCARD:
     case constants.API_REMEMBER_A_WORD:
@@ -23,7 +23,7 @@ export const createCardSet = (state = initialState, action) => {
       state.studiableCards = _.get('studiableCards', action.payload.body);
       state.cardSetSessionId = _.get('cardSetSessionId', action.payload.body);
       state.cardSetId = _.get('cardSetId', action.payload.body);
-
+      
       state.fetching = false;
       state.message = 'Ready to learn';
       return { ...state };
@@ -43,4 +43,4 @@ export const createCardSet = (state = initialState, action) => {
   }
 }
 
-export default createCardSet;
+export default flashCard;

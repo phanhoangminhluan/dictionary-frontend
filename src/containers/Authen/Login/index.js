@@ -2,7 +2,7 @@
 import React, { useEffect, memo } from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
-import { Icon, Input, Form, Button } from "antd";
+import { Icon, Input, Form, Button, message, Spin } from "antd";
 import { createStructuredSelector } from 'reselect';
 import { useHistory } from "react-router-dom";
 
@@ -14,12 +14,12 @@ import { key } from './constants';
 import { login } from './action';
 import reducer from './reducer';
 import saga from './saga';
-import { makeSelectFetching } from './selectors'
+import { makeSelectFetching, makeSelectError } from './selectors'
 
-export function LoginPage({ fleching, onLogin, form }) {
+export function LoginPage({ fleching, error, onLogin, form }) {
   const { getFieldDecorator, validateFields } = form;
   let history = useHistory();
-  
+
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 
@@ -30,6 +30,12 @@ export function LoginPage({ fleching, onLogin, form }) {
       history.push("/user");
     }
   })
+
+  useEffect(() => {
+    if (error) {
+      message.error('Username or password is wrong ')
+    }
+  }, [fleching])
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -47,84 +53,86 @@ export function LoginPage({ fleching, onLogin, form }) {
 
   return (
     <div className="content-container">
-      <div
-        style={{
-          display: "flex",
-          // backgroundImage: `url(${imgUrl})`,
-          background: "#fff",
-          padding: "2rem",
-          minHeight: "100vh"
-        }}
-      >
+      <Spin spinning={fleching}>
         <div
           style={{
-            padding: 20,
-            maxWidth: 600,
-            margin: "auto"
+            display: "flex",
+            // backgroundImage: `url(${imgUrl})`,
+            background: "#fff",
+            padding: "2rem",
+            minHeight: "100vh"
           }}
         >
-          <h1>Login in to Quizlet</h1>
-          <Form
-            onSubmit={handleSubmit}
-            className="login-form"
-            style={{ maxWidth: 360 }}
+          <div
+            style={{
+              padding: 20,
+              maxWidth: 600,
+              margin: "auto"
+            }}
           >
-            <Form.Item>
-              {getFieldDecorator("username", {
-                rules: [
-                  {
-                    required: true,
-                    message: "Please input username"
-                  }
-                ]
-              })(
-                <Input
-                  prefix={
-                    <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
-                  }
-                  placeholder="Username"
-                />
-              )}
-            </Form.Item>
-            <Form.Item>
-              {getFieldDecorator("password", {
-                rules: [
-                  {
-                    required: true,
-                    message: "Please input Password"
-                  }
-                ]
-              })(
-                <Input
-                  prefix={
-                    <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
-                  }
-                  type="password"
-                  placeholder="Password"
-                  autoComplete="off"
-                />
-              )}
-            </Form.Item>
+            <h1>Login in to Quizlet</h1>
+            <Form
+              onSubmit={handleSubmit}
+              className="login-form"
+              style={{ maxWidth: 360 }}
+            >
+              <Form.Item>
+                {getFieldDecorator("username", {
+                  rules: [
+                    {
+                      required: true,
+                      message: "Please input username"
+                    }
+                  ]
+                })(
+                  <Input
+                    prefix={
+                      <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
+                    }
+                    placeholder="Username"
+                  />
+                )}
+              </Form.Item>
+              <Form.Item>
+                {getFieldDecorator("password", {
+                  rules: [
+                    {
+                      required: true,
+                      message: "Please input Password"
+                    }
+                  ]
+                })(
+                  <Input
+                    prefix={
+                      <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
+                    }
+                    type="password"
+                    placeholder="Password"
+                    autoComplete="off"
+                  />
+                )}
+              </Form.Item>
 
-            <Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-                className="login-form-button"
-              >
-                Login
+              <Form.Item>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  className="login-form-button"
+                >
+                  Login
                 </Button>
-              <Button style={{ float: "right" }}
-                type="primary"
-                htmlType="button"
-                onClick={handleRegister}
-              >
-                Register
+                <Button style={{ float: "right" }}
+                  type="primary"
+                  htmlType="button"
+                  onClick={handleRegister}
+                >
+                  Register
                 </Button>
-            </Form.Item>
-          </Form>
+              </Form.Item>
+            </Form>
+          </div>
         </div>
-      </div>
+      </Spin>
     </div>
   );
 }
@@ -133,6 +141,7 @@ export function LoginPage({ fleching, onLogin, form }) {
 
 const mapStateToProps = createStructuredSelector({
   fleching: makeSelectFetching(),
+  error: makeSelectError()
 })
 
 export function mapDispatchToProps(dispatch) {

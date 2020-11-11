@@ -1,10 +1,11 @@
 /* eslint-disable react/prop-types */
 
 import React, { useState, useCallback, useEffect } from "react";
-import { Input, Row, Col, Card, Typography, Button, notification, Spin } from 'antd';
+import { Input, Row, Col, Card, Typography, Button, notification, Spin, Icon, Empty } from 'antd';
 import * as _ from 'lodash/fp';
 import * as action from '../action';
-
+import { useDispatch } from "react-redux";
+import { deleteACard } from '../action';
 const { Paragraph } = Typography;
 const { TextArea } = Input;
 
@@ -18,7 +19,7 @@ export function CardSet({ dispatch, listCardSet, idCard, nameCard, fleching, mes
   }, [nameCard])
 
   useEffect(() => {
-    setList(listCardSet)
+    setList([...listCardSet, ...listNew])
   }, [listCardSet])
 
   useEffect(() => {
@@ -91,6 +92,17 @@ export function CardSet({ dispatch, listCardSet, idCard, nameCard, fleching, mes
     }
   }
 
+  const handleDeleteCard = (id, index) => () => {
+    if(id){
+      dispatch(deleteACard(id))
+    } else {
+      const dummyList = list.filter((item, i) => i !== index)
+      const dummyListNew = listNew.filter((item, i) => i + listCardSet.length !== index)
+      setList(dummyList)
+      setListNew(dummyListNew)
+    }
+  }
+
   return (
     <Spin spinning={fleching}>
       <Row>
@@ -111,15 +123,31 @@ export function CardSet({ dispatch, listCardSet, idCard, nameCard, fleching, mes
           } style={{ width: '100%' }}>
           {
             list && list.map((item, index) => (
-              <Row key={index}>
-                <Col span={12}>
-                  <TextArea rows={4} onBlur={handleUpdate(index)} onChange={(value) => handleChangeDefinition(value, index)} value={item.definition} />
-                </Col>
+              <Row style={{position: "relative"}} key={index}>
+                <div style={{ position: "absolute", 
+                              top: 0, right: 0, 
+                              width: 30, height: 30, 
+                              backgroundColor: "#dadada", 
+                              borderRadius: 100, 
+                              color: "#bd0000",
+                              zIndex: 1,
+                              textAlign: "center",
+                              lineHeight: 2
+                            }}
+                    onClick={handleDeleteCard(item.id, index)}> X </div>
                 <Col span={12}>
                   <TextArea rows={4} onBlur={handleUpdate(index)} onChange={(value) => handleChangeTerm(value, index)} value={item.term} />
                 </Col>
+                <Col span={12}>
+                  <TextArea rows={4} onBlur={handleUpdate(index)} onChange={(value) => handleChangeDefinition(value, index)} value={item.definition} />
+                </Col>
               </Row>
             ))
+          }
+          {
+            list.length === 0 && (
+              <Empty />
+            )
           }
         </Card>
       </Row>

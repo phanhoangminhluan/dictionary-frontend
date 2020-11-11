@@ -1,16 +1,18 @@
 /* eslint-disable react/prop-types */
 import React, { memo } from "react";
-import { Row, Col } from 'antd';
+import { Row, Col, Skeleton, Result } from 'antd';
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { createStructuredSelector } from 'reselect';
 
-import { makeSelectWordDetail } from './selectors';
+import { makeSelectWordDetail, makeSelectFetching } from './selectors';
 import './styles.css';
 
-export function Dictionary({ wordDetail }) {
+export function Dictionary({ wordDetail, fetching }) {
   const { word, definitionDetails, ukPhonetic, usPhonetic } = wordDetail
-  return (
+  return fetching ? (
+    <Skeleton active />
+  ) : word ? (
     <div className="layout">
       <h1 className="title" >{word}</h1>
       <h4 className="phonetic" >(UK) Phonetic: {ukPhonetic}</h4>
@@ -46,7 +48,7 @@ export function Dictionary({ wordDetail }) {
                           if (index === 0) {
                             return <span>{synonymsItem}</span>
                           }
-                          return <span key={index}>{`', '${synonymsItem}`}</span>
+                          return <span key={index}>{`, ${synonymsItem}`}</span>
                         })
                       }
                     </Col>
@@ -61,12 +63,7 @@ export function Dictionary({ wordDetail }) {
                   </Col>
                     <Col span={21}>
                       {
-                        item.examples.map((examples, index) => {
-                          if (index === 0) {
-                            return <span>{examples}</span>
-                          }
-                          return <span key={index}>{`', '${examples}`}</span>
-                        })
+                        item.examples.map((examples, index) => (<span key={index}>{examples} <br/></span>))
                       }
                     </Col>
                   </Row>
@@ -78,11 +75,18 @@ export function Dictionary({ wordDetail }) {
       }
 
     </div>
-  )
+  ) : (
+        <Result
+          status="404"
+          title="Not found"
+          subTitle="Sorry, can't find this word"
+        />
+      )
 }
 
 const mapStateToProps = createStructuredSelector({
   wordDetail: makeSelectWordDetail(),
+  fetching: makeSelectFetching(),
 })
 
 export function mapDispatchToProps(dispatch) { }

@@ -19,6 +19,7 @@ export const dictionaryReducer = (state = initialState, action) => {
       case API_SEARCH_WORD_DETAIL: 
       case API_GET_WORD_SUGGESTION: 
         state.fetching = true;
+        state.wordDetail = {};
         return {...state};
       case API_SEARCH_WORD_DETAIL_SUCCESS:
         state.wordDetail = action.payload.body

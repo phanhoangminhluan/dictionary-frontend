@@ -1,0 +1,45 @@
+.card-content {
+  padding: 15px;
+  display: flex;
+  background-color: #d8d8d8;
+  height: 50vh;
+  font-size: 2rem;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.card-item .card-button {
+  height: auto;
+  background-color: hsla(0,0%,100%,0)!important;
+  border: .125rem solid #3ccfcf;
+  color: #455358;
+  font-weight: 700;
+  font-size: 1.125rem;
+  letter-spacing: .0625rem;
+  border-radius: .25rem;
+  cursor: pointer;
+}
+
+.card-item .disable {
+  border: .125rem solid #c0cace;
+  color: #c0cace!important;
+  cursor: auto;
+}
+
+.card-item .disable:hover {
+  border: .125rem solid #c0cace;
+}
+
+.card-item .card-button span {
+  padding: 1.5rem 5rem;
+}
+
+.animation-card {
+  animation-name: card;
+  animation-duration: 2s;
+}
+
+@keyframes card {
+  from {transform: rotateX(0deg)}
+  to {transform: rotateX(360deg)}
+}

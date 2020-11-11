@@ -9,7 +9,7 @@ export default function Sidebar({ pathSidebar }) {
     <Sider width={200} className="site-layout-background">
       <Menu
         mode="inline"
-        defaultSelectedKeys={['1']}
+        defaultSelectedKeys={['0']}
         defaultOpenKeys={['sub1']}
         style={{ height: '100%', borderRight: 0 }}
       >

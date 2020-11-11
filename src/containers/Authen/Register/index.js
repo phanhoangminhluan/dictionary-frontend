@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect, memo } from "react";
+import React, { useEffect, memo, useState } from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
-import { Icon, Input, Form, Button } from "antd";
+import { Icon, Input, Form, Button, message, Spin } from "antd";
 import { createStructuredSelector } from 'reselect';
 import { useHistory } from "react-router-dom";
 
@@ -16,10 +16,11 @@ import reducer from './reducer';
 import saga from './saga';
 import { makeSelectFetching, makeSelectError } from './selectors'
 
-export function RegisterPage({ fleching, error,onCreate, form }) {
+export function RegisterPage({ fleching, error, onCreate, form }) {
   const { getFieldDecorator, validateFields } = form;
+  const [isCallApi, setIsCallApi] = useState(false)
   let history = useHistory();
-  
+
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 
@@ -30,6 +31,15 @@ export function RegisterPage({ fleching, error,onCreate, form }) {
   //     history.push("/user");
   //   }
   // })
+  useEffect(() => {
+    if (isCallApi) {
+      if (error) {
+        message.error('Username or password is wrong ')
+      } else {
+        history.push("/login")
+      }
+    }
+  }, [fleching])
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -37,101 +47,104 @@ export function RegisterPage({ fleching, error,onCreate, form }) {
       if (!err) {
         console.log('Received values of form: ', values);
         onCreate(values);
+        setIsCallApi(true)
       }
     });
   };
 
   return (
-    <div className="content-container">
-      <div
-        style={{
-          display: "flex",
-          // backgroundImage: `url(${imgUrl})`,
-          background: "#fff",
-          padding: "2rem",
-          minHeight: "100vh"
-        }}
-      >
+    <Spin spinning={fleching}>
+      <div className="content-container">
         <div
           style={{
-            padding: 20,
-            maxWidth: 600,
-            margin: "auto"
+            display: "flex",
+            // backgroundImage: `url(${imgUrl})`,
+            background: "#fff",
+            padding: "2rem",
+            minHeight: "100vh"
           }}
         >
-          <h1>Register Quizlet</h1>
-          <Form
-            onSubmit={handleSubmit}
-            className="login-form"
-            style={{ maxWidth: 360 }}
+          <div
+            style={{
+              padding: 20,
+              maxWidth: 600,
+              margin: "auto"
+            }}
           >
-            <Form.Item>
-              {getFieldDecorator("username", {
-                rules: [
-                  {
-                    required: true,
-                    message: "Please input username"
-                  }
-                ]
-              })(
-                <Input
-                  prefix={
-                    <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
-                  }
-                  placeholder="Username"
-                />
-              )}
-            </Form.Item>
-            <Form.Item>
-              {getFieldDecorator("email", {
-                rules: [
-                  {
-                    required: true,
-                    message: "Please input email"
-                  }
-                ]
-              })(
-                <Input
-                  prefix={
-                    <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
-                  }
-                  placeholder="Email"
-                />
-              )}
-            </Form.Item>
-            <Form.Item>
-              {getFieldDecorator("password", {
-                rules: [
-                  {
-                    required: true,
-                    message: "Please input Password"
-                  }
-                ]
-              })(
-                <Input
-                  prefix={
-                    <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
-                  }
-                  type="password"
-                  placeholder="Password"
-                  autoComplete="off"
-                />
-              )}
-            </Form.Item>
+            <h1>Register Quizlet</h1>
+            <Form
+              onSubmit={handleSubmit}
+              className="login-form"
+              style={{ maxWidth: 360 }}
+            >
+              <Form.Item>
+                {getFieldDecorator("username", {
+                  rules: [
+                    {
+                      required: true,
+                      message: "Please input username"
+                    }
+                  ]
+                })(
+                  <Input
+                    prefix={
+                      <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
+                    }
+                    placeholder="Username"
+                  />
+                )}
+              </Form.Item>
+              <Form.Item>
+                {getFieldDecorator("email", {
+                  rules: [
+                    {
+                      required: true,
+                      message: "Please input email"
+                    }
+                  ]
+                })(
+                  <Input
+                    prefix={
+                      <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
+                    }
+                    placeholder="Email"
+                  />
+                )}
+              </Form.Item>
+              <Form.Item>
+                {getFieldDecorator("password", {
+                  rules: [
+                    {
+                      required: true,
+                      message: "Please input Password"
+                    }
+                  ]
+                })(
+                  <Input
+                    prefix={
+                      <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
+                    }
+                    type="password"
+                    placeholder="Password"
+                    autoComplete="off"
+                  />
+                )}
+              </Form.Item>
 
-            <Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-                className="login-form-button"
-              >
-                Register
+              <Form.Item style={{ display: 'flex', justifyContent: 'space-around' }}>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  className="login-form-button"
+                >
+                  Register
                 </Button>
-            </Form.Item>
-          </Form>
+              </Form.Item>
+            </Form>
+          </div>
         </div>
       </div>
-    </div>
+    </Spin>
   );
 }
 

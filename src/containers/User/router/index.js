@@ -7,7 +7,7 @@ const PATH = '/user';
 
 const indexRoutes = [
     {
-        path: `${PATH}/flash-card`,
+        path: `${PATH}/flash-card/:id`,
         name: 'FlashCard',
         component: FlashCard
     },
