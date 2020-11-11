@@ -3,6 +3,9 @@
 // export const BASE_URL = 'http://phanhoangminhluan.myddns.rocks:8080/dictionary-flashcard'
 export const BASE_URL = "http://192.168.43.42:8080/dictionary-flashcard"
 
+
+export const EVALUATE_FEEDBACK = `http://192.168.43.42:8080/checkMeaning/checking`;
+
 // Login
 export const AUTH__LOGIN = BASE_URL + '/login'
 
