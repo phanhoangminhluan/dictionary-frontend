@@ -18,7 +18,7 @@
     "eslint-plugin-react": "^7.18.3",
     "history": "^4.10.1",
     "hoist-non-react-statics": "^3.3.2",
-    "immer": "^5.3.6",
+    "immer": "^9.0.6",
     "invariant": "^2.2.4",
     "less": "^3.11.1",
     "less-loader": "^5.0.0",
